@@ -1,0 +1,38 @@
+
+.no-border {
+    border: none !important;
+}
+
+.display-none {
+    display: none;
+}
+
+.qred-text {
+    color: #D6232F;
+}
+
+.bg-qred {
+    background-color: #D6232F;
+}
+.bg-qblue {
+    background-color: #005C9F;
+}
+
+.qblue {
+    color: #005C9F;
+}
+
+.qblue-border {
+    border: 3px solid #005C9F;
+}
+
+.btn:hover {
+    background-color: #005C9F;;
+}
+.pointer-hand{
+    cursor: pointer;
+}
+
+html {
+    font-family: Roboto
+}

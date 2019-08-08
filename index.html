@@ -1,0 +1,210 @@
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+
+
+<body class="blue-grey lighten-5">
+
+<!--<nav class="bg-qblue" role="navigation">
+    <div class="nav-wrapper container center">
+
+<!--        <ul class="right hide-on-med-and-down">
+            <li><a href="./index.html">Faites le vôtre</a></li>
+            <li><a href="./exemples.html">Exemples</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="sidenav">
+            <li><a href="./index.html">Faites le vôtre</a></li>
+            <li><a href="./exemples.html">Exemples</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+    </div>
+</nav>-->
+
+<div class="container">
+
+    <h1 class="header center qred-text" style="font-size: 40px;"><b>Créer votre propre version du célèbre jeu <br><img alt="Qui est ce ?"src="image/QuiEstce.png" width="150px"/></b></h1>
+    <div class="card">
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center qblue"><i class="material-icons">filter_1</i></h2>
+                    <h5 class="center qred-text">Uploadez les photos et noms des personnages</h5>
+                    <p class="light">Remplissez le formulaire ci-dessous avec les 24 personnages. S'il vous en manque,
+                        pas de problème, des personnages par défautt sont disponibles</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center qblue"><i class="material-icons">filter_2</i></h2>
+                    <h5 class="center qred-text">Téléchargez votre PDF à imprimer</h5>
+
+                    <p class="light">Télécharger le fichier PDF généré avec vos personnages.</p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center qblue"><i class="material-icons">filter_3</i></h2>
+                    <h5 class="center qred-text">Imprimez, découpez et jouez !</h5>
+
+                    <p class="light">Imprimez le PDF en <b>recto-verso</b>. Découpez les cartes des personnages. C'est
+                        parti pour jouer! </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+                <div class="card  green lighten-2">
+                    <div class="card-content white-text">
+                        <span class="card-title">Conseils</span>
+                        <ul>
+                            <li><i class="material-icons" style="font-size: 15px;">check_circle</i> La taille des images est limitée à 1 MB.</li>
+                            <li><i class="material-icons" style="font-size: 15px;">check_circle</i> Les formats images acceptés sont JPEG, PNG, GIF</li>
+                            <li><i class="material-icons" style="font-size: 15px;">check_circle</i> Le format idéal des images est hauteur = 35mm et la largeur = 32mm</li>
+                            <li><i class="material-icons" style="font-size: 15px;">check_circle</i> Pour un meilleur rendu, il est conseillé de recadrer les images <u>avant l'upload</u> au plus près du visage via <a href="https://www.iloveimg.com/fr/recadrer-image" target="_blank">ce site</a></li>
+
+                        </ul>
+
+                    </div>
+                </div>
+
+    <div class="card">
+
+        <form method="POST" enctype="multipart/form-data" action="http://127.0.0.1:5000/whoswho-data" id="idForm">
+
+            <table class="striped responsive-table col s12 centered qblue" id="form-table">
+                <thead class="qblue">
+                <tr>
+                    <th>Carte n°</th>
+                    <th>Nom</th>
+                    <th>Photo</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <br>
+            <div class="row ">
+                <button class="btn waves-effect waves-light bg-qred col s8 offset-s2" name="action">Valider</button>
+            </div>
+            <br>
+        </form>
+    </div>
+
+    <div id="loading" class="display-none">
+        <div class="progress">
+            <div class="indeterminate"></div>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="row display-none result-card">
+            <div class=" row col s12 ">
+                <div class="center">
+                    <a target="_blank" id="result-link">
+                            <span class="card-title"><br>
+                            <i class="material-icons">get_app</i> Télécharger le PDF
+                            </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="center result-card display-none pointer-hand">
+        <p onclick="window.location.reload();"><i class="material-icons">replay</i> Recommencer </p>
+    </div>
+
+</div>
+
+<div class="center" style="font-size: small">
+    Les fichiers uploadés sont conservés 2 heures avant suppression définitive. Le PDF final est conservé 24 heures
+    avant suppression définitive.
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+
+        for (var i = 0; i <= 23; i++) {
+            $("#form-table tbody").append(
+                '            <tr>\n' +
+                '                <td>' + (i + 1) + '</td>\n' +
+                '                <td>\n' +
+                '                    <input  name="perso-' + i + '" id="perso-' + i + '" type="text" class="validate no-border"\n' +
+                '                           placeholder="Saisissez le nom">\n' +
+                '                </td>\n' +
+                '                <td>\n' +
+                '<input type="file" name="file-' + i + '"/>\n' +
+
+                '                </td>\n' +
+                '            </tr>'
+            )
+        }
+
+
+        // this is the id of the form
+        $("#idForm").submit(function (e) {
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+
+            //Doc : https://www.mkyong.com/jquery/jquery-ajax-submit-a-multipart-form/
+            var form = $('#idForm')[0];
+            var data = new FormData(form);
+
+            var url = $('#idForm').attr('action');
+
+            $("#idForm").hide();
+            $("#loading").show();
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data, // serializes the form's elements.
+                enctype: 'multipart/form-data',
+                processData: false,  // Important!
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    $("#loading").hide();
+                    $("#result-link").attr('href', data);
+                    $(".result-card").show();
+                    $('html, body').animate({
+                        scrollTop: ($('.result-card').offset().top)
+                    }, 500);
+                },
+                // La fonction à appeler si la requête n'a pas abouti
+                error: function () {
+                    // J'affiche un message d'erreur
+                    console.log(data)
+                    alert(data)
+                }
+
+            });
+
+
+        });
+    });
+</script>
+</body>
+</html>
